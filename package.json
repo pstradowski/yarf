@@ -1,0 +1,13 @@
+{
+  "name": "YARF mqtt",
+  "version": "0.1.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pstradowski/yarf.git"
+  },
+  "dependencies": {
+    "mqtt": "^2.16.0",
+    "rfcontroljs": "0.0.58",
+    "serialport": "^6.1.1"
+  }
+}
