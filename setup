@@ -32,11 +32,12 @@ cp ./config.js.sample $CONFIG_DIR
 
 
 cp ./devices.json.sample $CONFIG_DIR
+cp yarf.service /lib/systemd/system
 
 cd $INSTALL_DIR
 npm install
 
-cp yarf.service /lib/systemd/system
+
 systemctl daemon-reload
 systemctl start yarf.service
 systemctl enable 
