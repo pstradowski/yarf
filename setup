@@ -1,5 +1,6 @@
 INSTALL_DIR="/srv/yarf"
 CONFIG_DIR="/etc/yarf"
+TMP_DIR="./tmp"
 
 if [ $EUID != 0 ]; then
     echo "Need root privileges to install"
@@ -21,8 +22,13 @@ if [ ! -d "$INSTALL_DIR" ]; then
     mkdir "$INSTALL_DIR"
 fi
 
-cp ./gateway.js $INSTALL_DIR
-cp ./package.json $INSTALL_DIR
+if [ ! -d "$TMP_DIR" ]; then
+    echo "Creating directory $TMP_DIR"
+    mkdir "$TMP_DIR"
+fi
+
+cp ./gateway.js $TMP_DIR
+cp ./package.json $TMP_DIR
 
 if [ ! -d "$CONFIG_DIR" ]; then
     echo "Creating directory $CONFIG_DIR"
@@ -34,10 +40,10 @@ cp ./config.js.sample $CONFIG_DIR
 cp ./devices.json.sample $CONFIG_DIR
 cp yarf.service /lib/systemd/system
 
-cd $INSTALL_DIR
+cd $TMP_DIR
 npm install
-
+cp --recursive * $INSTALL_DIR
 
 systemctl daemon-reload
 systemctl start yarf.service
-systemctl enable 
+systemctl enable yarf.service
