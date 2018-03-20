@@ -1,0 +1,42 @@
+INSTALL_DIR="/srv/yarf"
+CONFIG_DIR="/etc/yarf"
+
+if [ $EUID != 0 ]; then
+    echo "Need root privileges to install"
+    sudo "$0" "$@"
+    exit $?
+fi
+
+getent passwd yarf > /dev/null
+
+if [ $? -eq 0 ]; then
+    echo "User yarf already exists in the system"
+else
+    echo "Adding user yarf to the system"
+    adduser --system --ingroup dialout yarf
+fi
+
+if [ ! -d "$INSTALL_DIR" ]; then
+    echo "Creating directory $INSTALL_DIR"
+    mkdir "$INSTALL_DIR"
+fi
+
+cp ./gateway.js $INSTALL_DIR
+cp ./package.json $INSTALL_DIR
+
+if [ ! -d "$CONFIG_DIR" ]; then
+    echo "Creating directory $CONFIG_DIR"
+    mkdir -p "$CONFIG_DIR"
+fi
+cp ./config.js.sample $CONFIG_DIR
+
+
+cp ./devices.json.sample $CONFIG_DIR
+
+cd $INSTALL_DIR
+npm install
+
+cp yarf.service /lib/systemd/system
+systemctl daemon-reload
+systemctl start yarf.service
+systemctl enable 
