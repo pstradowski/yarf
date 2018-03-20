@@ -1,0 +1,12 @@
+[Unit]
+Description=Yet Another RF to MQTT gateway
+After=network.target
+
+[Service]
+Type=simple
+User=yarf
+ExecStart=/usr/bin/node /srv/yarf/gateway.js
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

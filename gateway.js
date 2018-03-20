@@ -1,12 +1,15 @@
 var config = require('/etc/yarf/config.js')
 var mqtt = require('mqtt')
+
+
 var mqtt_client  = mqtt.connect("mqtt://" + config.mqtt.host)
+
 var isSubset=require('is-subset');
 var devices = require('/etc/yarf/devices.json');
 
 const controller = require('rfcontroljs')
 
-
+mqtt_client.on('connect', function() {console.log('Connected to MQTT')} )
 
 
 function check_rf(data){

@@ -1,11 +1,14 @@
 {
-  "name": "YARF mqtt",
-  "version": "0.1.1",
+  "name": "YARF",
+  "version": "0.1.2",
+  "description": "Yet Another RF to MQTT gateway",
+  "license": "GPL-3.0",
   "repository": {
     "type": "git",
     "url": "https://github.com/pstradowski/yarf.git"
   },
   "dependencies": {
+    "is-subset": "^0.1.1",
     "mqtt": "^2.16.0",
     "rfcontroljs": "0.0.58",
     "serialport": "^6.1.1"

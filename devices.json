@@ -1,0 +1,24 @@
+[
+    {
+        "name": "Termometr_pn",
+        "type": "temperature_humidity",
+        "ident": {
+            "protocol": "weather13",
+            "values": {
+                "id": 41,
+                "channel": 2
+            }
+        }
+    },
+    {
+        "name": "Termometr_zach",
+        "type": "temperature_humidity",
+        "ident": {
+            "protocol": "weather13",
+            "values": {
+                "id": 23,
+                "channel": 1
+            }
+        }
+    }
+]

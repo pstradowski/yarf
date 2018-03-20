@@ -1,0 +1,9 @@
+var config = {};
+
+config.mqtt = { host : 'truskawka.local',
+                topic: '433MHz'
+}
+
+config.serialport = '/dev/ttyUSB0';
+
+module.exports  = config;
