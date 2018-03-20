@@ -33,11 +33,11 @@ function decode_RF(line){
 	result = controller.prepareCompressedPulses(line)
 	decoded = controller.decodePulses(result.pulseLengths, result.pulses)
 	if (decoded.length > 0){
-        console.log(JSON.stringify(decoded, null, 4))
         measurement = check_rf(decoded);
         if (measurement != null) {
             mqtt_client.publish(config.mqtt.topic, measurement)
-            
+        } else {
+            console.log(JSON.stringify(decoded, null, 4))
         }        
 		
 		
