@@ -18,7 +18,7 @@ A copy of RFControl compressed.ino is located in folder **arduino**, you need to
 sudo apt-get install arduino-mk
 sudo apt-get install python-serial
 ```
-After this, make upload should do all job.
+After this, make upload shoould load compiled sketch to your Arduino.
 
 # Install
 
