@@ -1,7 +1,12 @@
+#!/usr/bin/env node
+
+var program = require('commander');
+program
+.option('--discovery', 'Discover new devices')
+.parse(process.argv);
+
 var config = require('/etc/yarf/config.js')
 var mqtt = require('mqtt')
-
-
 var mqtt_client  = mqtt.connect("mqtt://" + config.mqtt.host)
 
 var isSubset=require('is-subset');
@@ -36,11 +41,9 @@ function decode_RF(line){
         measurement = check_rf(decoded);
         if (measurement != null) {
             mqtt_client.publish(config.mqtt.topic, measurement)
-        } else {
+        } else if (program.discovery) {
             console.log(JSON.stringify(decoded, null, 4))
         }        
-		
-		
 	}
 }	
 

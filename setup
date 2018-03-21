@@ -1,8 +1,4 @@
-INSTALL_DIR="/srv/yarf"
 CONFIG_DIR="/etc/yarf"
-TMP_DIR="./tmp"
-
-npm install
 
 if [ $EUID != 0 ]; then
     echo "Need root privileges to install"
@@ -10,7 +6,9 @@ if [ $EUID != 0 ]; then
     exit $?
 fi
 
-getent passwd yarf > /dev/null
+npm install -g 
+
+getent passwd yarf > /dev/nullcat 
 
 if [ $? -eq 0 ]; then
     echo "User yarf already exists in the system"
@@ -19,10 +17,6 @@ else
     adduser --system --ingroup dialout yarf
 fi
 
-if [ ! -d "$INSTALL_DIR" ]; then
-    echo "Creating directory $INSTALL_DIR"
-    mkdir "$INSTALL_DIR"
-fi
 
 if [ ! -d "$CONFIG_DIR" ]; then
     echo "Creating directory $CONFIG_DIR"
@@ -34,7 +28,6 @@ cp ./devices.json.sample $CONFIG_DIR
 
 cp yarf.service /lib/systemd/system
 
-cp --recursive * $INSTALL_DIR
 
 systemctl daemon-reload
 systemctl start yarf.service

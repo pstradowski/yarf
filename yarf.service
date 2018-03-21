@@ -5,7 +5,7 @@ After=network.target
 [Service]
 Type=simple
 User=yarf
-ExecStart=/usr/bin/node /srv/yarf/gateway.js
+ExecStart=/usr/bin/yarf
 Restart=on-failure
 
 [Install]
