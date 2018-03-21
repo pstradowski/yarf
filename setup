@@ -6,7 +6,7 @@ if [ $EUID != 0 ]; then
     exit $?
 fi
 
-npm install -g 
+npm install -g --unsafe-perm
 
 getent passwd yarf > /dev/nullcat 
 
