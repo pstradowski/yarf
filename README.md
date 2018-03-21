@@ -13,21 +13,111 @@ Arduino Nano runs an example program from RFControl https://github.com/pimatic/R
 
 # Arduino sketch
 
-
+A copy of RFControl compressed.ino is located in folder **arduino**, you need to install arduino-mk and its dependencies 
+```
+sudo apt-get install arduino-mk
+sudo apt-get install python-serial
+```
+After this, make upload should do all job.
 
 # Install
 
 Setup script installs yarf and load necessary libraries. Systemd unit file yarf.service is installed and enabled at boot.
 
-# Configuration files
+## Configuration files
 
 In /etc/yarf we have 2 configuration files:
 * config.js - MQTT configuration and serial port
 * devices.json - devices database
 
-# Adding your devices to devices.json
+## Discovering your devices
+
+In general, you should start with an empty devices.json.
 
 1. Stop yarf.service: sudo systemctl stop yarf.service
-2. Run yarf manually: node /srv/yarf/gateway.js
+2. Run yarf manually with discovery enabled: yarf -discovery
 3. Yarf will print newly discovered devices to stdout. There will be some alternative matches proposed by rfcontroljs.
+```json
+[
+    {
+        "protocol": "weather12",
+        "values": {
+            "id": 152,
+            "channel": 3,
+            "temperature": 26.9,
+            "humidity": 32,
+            "lowBattery": true
+        }
+    },
+    {
+        "protocol": "weather14",
+        "values": {
+            "id": 113,
+            "channel": 1,
+            "temperature": -21.3,
+            "lowBattery": true,
+            "humidity": 245
+        }
+    },
+    {
+        "protocol": "weather15",
+        "values": {
+            "id": 2446,
+            "channel": 2,
+            "temperature": 21.2,
+            "humidity": 10,
+            "lowBattery": false
+        }
+    }
+]
+```
+In the above case the proper match is:
+```json
+{
+    "protocol": "weather15",
+    "values": {
+        "id": 2446,
+        "channel": 2,
+        "temperature": 21.2,
+        "humidity": 10,
+        "lowBattery": false
+    }
+}
+```
+## devices.json format
+Each match in devices.json is defined by following entry:
+```json
+{
+    "name": "Name of sensor",
+    "type": "type of sensor",
+    "ident": "an object which will identify this sensor"
+    }
+```
+In the case above, we will make ident field by removing form discovered match all variable parameters:
+
+```json
+{
+    "protocol": "weather15",
+    "values": {
+        "id": 2446,
+        "channel": 2        
+    }
+}
+```
+An entry for devices.json will look as follows:
+```json
+{
+    "name": "Sensor north",
+    "type": "temperature_humidity",
+    "ident": {
+        "protocol": "weather15",
+        "values": {
+            "id": 2446,
+            "channel": 2        
+        }
+    }
+}
+```
+Message on MQTT will consist of name, type from above definition plus values field read from device.
+
 
