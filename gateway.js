@@ -41,7 +41,8 @@ function decode_RF(line){
         measurement = check_rf(decoded);
         if (measurement != null) {
             mqtt_client.publish(config.mqtt.topic, measurement)
-        } else if (program.discovery) {
+        } 
+	if (program.discovery) {
             console.log(JSON.stringify(decoded, null, 4))
         }        
 	}
