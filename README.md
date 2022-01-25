@@ -35,7 +35,7 @@ In /etc/yarf we have 2 configuration files:
 In general, you should start with an empty devices.json.
 
 1. Stop yarf.service: sudo systemctl stop yarf.service
-2. Run yarf manually with discovery enabled: yarf -discovery
+2. Run yarf manually with discovery enabled: yarf --discovery
 3. Yarf will print newly discovered devices to stdout. There will be some alternative matches proposed by rfcontroljs.
 ```json
 [
